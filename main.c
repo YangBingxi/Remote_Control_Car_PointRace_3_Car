@@ -13,6 +13,7 @@
 #include "driverlib/pwm.h"
 #include "Motor/motor.h"
 #include "delay/delay.h"
+#include "head.h"
 
 
 /**
@@ -20,12 +21,15 @@
  */
 int main(void)
 {
+    uint16_t i = 400;
+
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
     Motor_Configure();
-    while(1)
+    while(i>0)
     {
         SetMotor_Eight(0);
         SysCtlDelay(SysCtlClockGet()*8/(30000));   //╟кед800usкдед1000us
+        i--;
     }
   //  return 0;
 }
