@@ -13,7 +13,7 @@
 #include "driverlib/pwm.h"
 #include "Motor/motor.h"
 #include "delay/delay.h"
-#include "usart/usart.h"
+#include "uart/uart.h"
 #include "head.h"
 
 
@@ -25,12 +25,18 @@ int main(void)
     uint16_t i = 400;
     SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
     Motor_Configure();
-    ConfigureUART0();
-    ConfigureUART2();
-    printf("Hello\n");
-    UART2_Send("World\n",6);
-    UARTprintf("1234567890\n");
+    //
+    // Enable the GPIO port that is used for the on-board LED.
+    //
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 
+    //
+    // Enable the GPIO pins for the LED (PF2).
+    //
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2|GPIO_PIN_1);
+
+    Uart0Iint();
+    Uart1Iint();
     while(i>0)
     {
         SetMotor_Eight(0);

@@ -17,8 +17,8 @@ ORDERED_OBJS += \
 "./delay/delay.obj" \
 "./key/key.obj" \
 "./led/led.obj" \
-"./usart/uartstdio.obj" \
-"./usart/usart.obj" \
+"./uart/uart_echo.obj" \
+"./uart/uartstdio.obj" \
 "D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -37,14 +37,14 @@ RMDIR := RMDIR /S/Q
 -include delay/subdir_vars.mk
 -include key/subdir_vars.mk
 -include led/subdir_vars.mk
--include usart/subdir_vars.mk
+-include uart/subdir_vars.mk
 -include subdir_rules.mk
 -include 9.6'OLED/subdir_rules.mk
 -include Motor/subdir_rules.mk
 -include delay/subdir_rules.mk
 -include key/subdir_rules.mk
 -include led/subdir_rules.mk
--include usart/subdir_rules.mk
+-include uart/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -175,8 +175,8 @@ PointRace_3_Car.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Motor\motor.obj" "delay\delay.obj" "key\key.obj" "led\led.obj" "usart\uartstdio.obj" "usart\usart.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Motor\motor.d" "delay\delay.d" "key\key.d" "led\led.d" "usart\uartstdio.d" "usart\usart.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Motor\motor.obj" "delay\delay.obj" "key\key.obj" "led\led.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Motor\motor.d" "delay\delay.d" "key\key.d" "led\led.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

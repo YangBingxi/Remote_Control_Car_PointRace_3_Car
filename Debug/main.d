@@ -27,7 +27,7 @@ main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 main.obj: F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h
 main.obj: F:/ProjectFile/ccs/PointRace_3_Car/head.h
-main.obj: ../usart/usart.h
+main.obj: ../uart/uart.h
 
 ../main.c: 
 D:/Project_Program/Ccs_V7/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h: 
@@ -56,4 +56,4 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h:
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/head.h: 
-../usart/usart.h: 
+../uart/uart.h: 

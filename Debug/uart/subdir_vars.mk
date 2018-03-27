@@ -6,27 +6,27 @@ SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../usart/uartstdio.c \
-../usart/usart.c 
+../uart/uart_echo.c \
+../uart/uartstdio.c 
 
 C_DEPS += \
-./usart/uartstdio.d \
-./usart/usart.d 
+./uart/uart_echo.d \
+./uart/uartstdio.d 
 
 OBJS += \
-./usart/uartstdio.obj \
-./usart/usart.obj 
+./uart/uart_echo.obj \
+./uart/uartstdio.obj 
 
 OBJS__QUOTED += \
-"usart\uartstdio.obj" \
-"usart\usart.obj" 
+"uart\uart_echo.obj" \
+"uart\uartstdio.obj" 
 
 C_DEPS__QUOTED += \
-"usart\uartstdio.d" \
-"usart\usart.d" 
+"uart\uart_echo.d" \
+"uart\uartstdio.d" 
 
 C_SRCS__QUOTED += \
-"../usart/uartstdio.c" \
-"../usart/usart.c" 
+"../uart/uart_echo.c" \
+"../uart/uartstdio.c" 
 
 

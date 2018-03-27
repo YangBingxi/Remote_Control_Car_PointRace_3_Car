@@ -117,5 +117,5 @@ Motor \
 delay \
 key \
 led \
-usart \
+uart \
 
