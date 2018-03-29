@@ -39,7 +39,28 @@ int main(void)
     Uart1Iint();
     while(i>0)
     {
-        SetMotor_Eight(0);
+        SetMotor_Eight_Motor0(0);
+        SysCtlDelay(SysCtlClockGet()*8/(30000));   //╟кед800usкдед1000us
+        i--;
+    }
+    i=400;
+    while(i>0)
+    {
+        SetMotor_Eight_Motor0(1);
+        SysCtlDelay(SysCtlClockGet()*8/(30000));   //╟кед800usкдед1000us
+        i--;
+    }
+    i=400;
+    while(i>0)
+    {
+        SetMotor_Eight_Motor1(0);
+        SysCtlDelay(SysCtlClockGet()*8/(30000));   //╟кед800usкдед1000us
+        i--;
+    }
+    i=400;
+    while(i>0)
+    {
+        SetMotor_Eight_Motor1(1);
         SysCtlDelay(SysCtlClockGet()*8/(30000));   //╟кед800usкдед1000us
         i--;
     }
