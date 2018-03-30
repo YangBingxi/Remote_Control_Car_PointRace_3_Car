@@ -36,6 +36,7 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
 #include "uart.h"
+#include "Timer/Timer.h"
 
 
 //*****************************************************************************
@@ -185,6 +186,9 @@ void Uart0Iint(void)
 //UART1
 uint8_t ReciveData_UART1[16];
 uint8_t ReciveData_i_UART1 = 0;
+uint8_t MotorOrderDirection = 5;        //前：0  后：1  左：2  右： 3
+uint8_t MotorOrderDisplacement = 0;     //前后表示距离，左右表示转向角
+extern uint32_t Counter;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
 
 
 //*****************************************************************************
@@ -238,7 +242,34 @@ UART1IntHandler(void)
     }
 
  //   UARTSend()
+    UART1Send("Received: ",10);
     UART1Send(ReciveData_UART1, ReciveData_i_UART1);
+    if(ReciveData_UART1[0]=='F')
+    {
+        Counter = 0; //计数清零
+        TimerEnable(TIMER0_BASE, TIMER_A);
+        MotorOrderDirection = 0;//前：0  后：1  左：2  右： 3
+    }
+    else if (ReciveData_UART1[0]=='B')
+    {
+        Counter = 0; //计数清零
+        TimerEnable(TIMER0_BASE, TIMER_A);
+        MotorOrderDirection = 1;//前：0  后：1  左：2  右： 3
+    }
+    else if (ReciveData_UART1[0]=='L')
+    {
+        Counter = 0; //计数清零
+        TimerEnable(TIMER0_BASE, TIMER_A);
+        MotorOrderDirection = 2;//前：0  后：1  左：2  右： 3
+    }
+    else if (ReciveData_UART1[0]=='R')
+    {
+        Counter = 0; //计数清零
+        TimerEnable(TIMER0_BASE, TIMER_A);
+        MotorOrderDirection = 3;//前：0  后：1  左：2  右： 3
+    }
+
+    MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
 }
 
 
