@@ -1,3 +1,19 @@
+/**
+  ******************************************************************************
+  * 文件名程: Uart_echo.c
+  * 作    者: By Sw Young
+  * 版    本: V1.0
+  * 功    能:
+  * 编写日期: 2018.3.29
+  ******************************************************************************
+  * 说明：
+  * 硬件平台：
+  *   MCUc:TM4C123、2相四线步进电机、DRV8825电机驱动、WiFi
+  * 软件设计说明：
+  *   通过无线精确控制小车的前进、后退距离；左转右转角度。
+  * Github：
+  ******************************************************************************
+**/
 //*****************************************************************************
 //
 // uart_echo.c - Example for reading data from and writing data to the UART in
@@ -22,6 +38,7 @@
 // This is part of revision 2.1.4.178 of the EK-TM4C123GXL Firmware Package.
 //
 //*****************************************************************************
+
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -189,7 +206,7 @@ uint8_t ReciveData_i_UART1 = 0;
 uint8_t MotorOrderDirection = 5;        //前：0  后：1  左：2  右： 3
 uint8_t MotorOrderDisplacement = 0;     //前后表示距离，左右表示转向角
 extern uint32_t Counter;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
-
+extern uint8_t FlagSend;
 
 //*****************************************************************************
 //
@@ -248,24 +265,28 @@ UART1IntHandler(void)
     {
         Counter = 0; //计数清零
         TimerEnable(TIMER0_BASE, TIMER_A);
+        FlagSend = 1;
         MotorOrderDirection = 0;//前：0  后：1  左：2  右： 3
     }
     else if (ReciveData_UART1[0]=='B')
     {
         Counter = 0; //计数清零
         TimerEnable(TIMER0_BASE, TIMER_A);
+        FlagSend = 1;
         MotorOrderDirection = 1;//前：0  后：1  左：2  右： 3
     }
     else if (ReciveData_UART1[0]=='L')
     {
         Counter = 0; //计数清零
         TimerEnable(TIMER0_BASE, TIMER_A);
+        FlagSend =1;
         MotorOrderDirection = 2;//前：0  后：1  左：2  右： 3
     }
     else if (ReciveData_UART1[0]=='R')
     {
         Counter = 0; //计数清零
         TimerEnable(TIMER0_BASE, TIMER_A);
+        FlagSend = 1;
         MotorOrderDirection = 3;//前：0  后：1  左：2  右： 3
     }
 

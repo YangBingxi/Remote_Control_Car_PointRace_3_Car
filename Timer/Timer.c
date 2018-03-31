@@ -1,3 +1,19 @@
+/**
+  ******************************************************************************
+  * 文件名程: Timer.c
+  * 作    者: By Sw Young
+  * 版    本: V1.0
+  * 功    能:
+  * 编写日期: 2018.3.29
+  ******************************************************************************
+  * 说明：
+  * 硬件平台：
+  *   MCUc:TM4C123、2相四线步进电机、DRV8825电机驱动、WiFi
+  * 软件设计说明：
+  *   通过无线精确控制小车的前进、后退距离；左转右转角度。
+  * Github：
+  ******************************************************************************
+**/
 #include "timer.h"
 
 extern uint8_t MotorOrderDirection;        //前：0  后：1  左：2  右： 3
@@ -5,14 +21,23 @@ extern uint8_t MotorOrderDisplacement;     //前后表示距离，左右表示转向角
 char Time_Flag = 0;
 uint32_t Counter = 0;
 
-//如果两个定时器的效果不明显，可以使用一个定时器通过改变计数值来控制两个电机！！
+
+/**
+  * 函 数 名:MotorContolTimer.c
+  * 函数功能: 电机定时器
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明:
+  *   By Sw Young
+  *   2018.03.29
+  */
 void MotorContolTimer(void)
 {
     //
        // Enable the peripherals used by this example.
        //
         SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
-
+        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);
        //
        // Enable processor interrupts.
        //
@@ -22,19 +47,34 @@ void MotorContolTimer(void)
        // Configure the two 32-bit periodic timers.
        //
         TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
-        TimerLoadSet(TIMER0_BASE, TIMER_A,  SysCtlClockGet()/20000-1);  //10KHz
+        TimerConfigure(TIMER1_BASE, TIMER_CFG_PERIODIC);
+
+        TimerLoadSet(TIMER0_BASE, TIMER_A,  SysCtlClockGet()/20000-1);  //20KHz
+        TimerLoadSet(TIMER1_BASE, TIMER_A,  SysCtlClockGet() ); //5HZ
 
        //
        // Setup the interrupts for the timer timeouts.
        //
         IntEnable(INT_TIMER0A);
-        TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+        IntEnable(INT_TIMER1A);
 
+        TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+        TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
        //
        // Enable the timers.
        //
         TimerEnable(TIMER0_BASE, TIMER_A);
+        TimerEnable(TIMER1_BASE, TIMER_A);
 }
+/**
+  * 函 数 名:Timer0IntHandler.c
+  * 函数功能: 电机定时器中断
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明:
+  *   By Sw Young
+  *   2018.03.29
+  */
 void Timer0IntHandler(void)
 {
     //清除标志位
@@ -65,29 +105,31 @@ void Timer0IntHandler(void)
     IntMasterEnable();
 
 }
+/**
+  * 函 数 名:Timer1IntHandler.c
+  * 函数功能: 串口参数发送定时器中断
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明:
+  *   By Sw Young
+  *   2018.03.29
+  */
+void Timer1IntHandler(void)
+{
+    //
+    // Clear the timer interrupt.
+    //
+    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 
-//void Motor1_Contol(void)
-//{
-//    //使能TIMER1
-//    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);
-//    //TimerConfigure(TIMER1_BASE, TIMER_CFG_ONE_SHOT);//单次计数模式
-//    TimerConfigure(TIMER1_BASE, TIMER_CFG_PERIODIC);//周期性计数模式
-//    TimerLoadSet(TIMER1_BASE, TIMER_A,SysCtlClockGet() / 10 - 1);//计数频率10HZ
-//    IntEnable(INT_TIMER0A);//NVIC
-//    //使能TIMER0A
-//    TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-//    //TIMEOUT标志位触发中断
-//    IntMasterEnable();
-//    //master interrupt enable API for all interrupts
-//    TimerEnable(TIMER1_BASE, TIMER_A);
-//    //TIMER0A开始计数，当计数值等于TimerLoadSet，触发中断
-//}
-//void Timer1IntHandler(void)
-//{
-//
-//    TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-//    //清除标志位
-//
-//    GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_7, 0);//执行脉冲来控制转速
-//
-//}
+    //
+    // Update the interrupt status on the display.
+    //
+    if(MotorOrderDirection==0||MotorOrderDirection==1)
+    {
+        UARTprintf("Dis%d",(Counter*20)/6400);
+    }
+    else if (MotorOrderDirection==2||MotorOrderDirection==3)
+    {
+        UARTprintf("Ang%d",(int)(Counter/89.3));
+    }
+}

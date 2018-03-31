@@ -25,6 +25,7 @@ key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 key/key.obj: D:/Project_Program/Ccs_V7/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h
 key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h
 key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
+key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h
 key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h
 key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/head.h
 
@@ -53,5 +54,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h:
 D:/Project_Program/Ccs_V7/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/uart.h: 
 D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/head.h: 

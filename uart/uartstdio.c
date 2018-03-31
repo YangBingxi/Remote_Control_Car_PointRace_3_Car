@@ -133,7 +133,7 @@ static volatile uint32_t g_ui32UARTRxReadIndex = 0;
 // The base address of the chosen UART.
 //
 //*****************************************************************************
-static uint32_t g_ui32Base = 0;
+static uint32_t g_ui32Base = UART1_BASE;
 
 //*****************************************************************************
 //
