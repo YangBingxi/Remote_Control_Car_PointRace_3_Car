@@ -113,6 +113,7 @@ PDE_DEPS__QUOTED :=
 SUBDIRS := \
 . \
 9.6'OLED \
+Beep \
 Motor \
 Pwm \
 Timer \

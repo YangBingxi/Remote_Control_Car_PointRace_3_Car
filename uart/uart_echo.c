@@ -207,6 +207,9 @@ uint8_t MotorOrderDirection = 5;        //前：0  后：1  左：2  右： 3
 uint8_t MotorOrderDisplacement = 0;     //前后表示距离，左右表示转向角
 extern uint32_t Counter;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
 extern uint8_t FlagSend;
+extern uint8_t Beep_Flag;
+extern uint32_t Beep_Counter;
+extern uint32_t Beep_Fre;
 
 //*****************************************************************************
 //
@@ -267,11 +270,11 @@ UART1IntHandler(void)
         TimerEnable(TIMER0_BASE, TIMER_A);
         FlagSend = 1;
         MotorOrderDirection = 0;//前：0  后：1  左：2  右： 3
-        PWMGenEnable(PWM0_BASE, PWM_GEN_0);
-        PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, 5000);  //500HZ
-        //设置PWM0/PWM1输出的脉冲宽度
-        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0,2500);//50%占空比
-        LED_Color(79, 12, 0);
+
+        Beep_Flag = 1;
+        Beep_Counter = 0;
+        Beep_Fre = 50;
+
     }
     else if (ReciveData_UART1[0]=='B')
     {
@@ -280,11 +283,10 @@ UART1IntHandler(void)
         FlagSend = 1;
         MotorOrderDirection = 1;//前：0  后：1  左：2  右： 3
 
-        PWMGenEnable(PWM0_BASE, PWM_GEN_0);
-        PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, 4000); //625hz
-        //设置PWM0/PWM1输出的脉冲宽度
-        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0,2000);//50%占空比
-        LED_Color(255, 255, 153);
+        Beep_Flag = 1;
+        Beep_Counter = 0;
+        Beep_Fre = 33;
+
     }
     else if (ReciveData_UART1[0]=='L')
     {
@@ -293,11 +295,10 @@ UART1IntHandler(void)
         FlagSend =1;
         MotorOrderDirection = 2;//前：0  后：1  左：2  右： 3
 
-        PWMGenEnable(PWM0_BASE, PWM_GEN_0);
-        PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, 3000); //833hz
-        //设置PWM0/PWM1输出的脉冲宽度
-        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0,1500);//50%占空比
-        LED_Color(6, 219, 0);
+        Beep_Flag = 1;
+        Beep_Counter = 0;
+        Beep_Fre = 20;
+
     }
     else if (ReciveData_UART1[0]=='R')
     {
@@ -306,11 +307,10 @@ UART1IntHandler(void)
         FlagSend = 1;
         MotorOrderDirection = 3;//前：0  后：1  左：2  右： 3
 
-        PWMGenEnable(PWM0_BASE, PWM_GEN_0);
-        PWMGenPeriodSet(PWM0_BASE, PWM_GEN_0, 6000); //416hz
-        //设置PWM0/PWM1输出的脉冲宽度
-        PWMPulseWidthSet(PWM0_BASE, PWM_OUT_0,3000);//50%占空比
-        LED_Color(240, 0, 2);
+        Beep_Flag = 1;
+        Beep_Counter = 0;
+        Beep_Fre = 40;
+
     }
 
     MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);

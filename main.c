@@ -38,6 +38,8 @@ extern uint32_t Counter;
 extern uint8_t MotorOrderDirection;        //前：0  后：1  左：2  右： 3
 extern uint8_t MotorOrderDisplacement;     //前后表示距离，左右表示转向角
 uint32_t CountBan = 65335;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
+extern uint8_t Beep_Flag;
+
 uint32_t SendCount = 0;
 uint8_t FlagSend = 0;
 uint8_t Time;
@@ -78,8 +80,9 @@ int main(void)
     MotorInit();
     MotorContolTimer();
     MotorSet(3,0,0);
-    BeepPwmInit();
-    LED_ColorInit();
+//    BeepPwmInit();
+//    LED_ColorInit();
+    Beep_Configure();
 //    OLED_Init();            //初始化OLED
 //    OLED_Clear();
 //    OLEDShowScree();
@@ -129,8 +132,7 @@ int main(void)
             MotorSet(3,0,0);//制动
             TimerDisable(TIMER0_BASE, TIMER_A);//Disable Timer0
             //TimerDisable(TIMER1_BASE, TIMER_A);
-            PWMGenDisable(PWM0_BASE, PWM_GEN_0);//Disable Pwm
-            LED_Color(0, 0, 0);
+            Beep_Flag=0;
         }
         SendCount++;
         if(SendCount>9000)

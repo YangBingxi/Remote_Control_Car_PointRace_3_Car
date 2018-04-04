@@ -20,6 +20,9 @@ extern uint8_t MotorOrderDirection;        //前：0  后：1  左：2  右： 3
 extern uint8_t MotorOrderDisplacement;     //前后表示距离，左右表示转向角
 char Time_Flag = 0;
 uint32_t Counter = 0;
+uint8_t Beep_Flag = 0;
+uint32_t Beep_Counter = 0;
+uint32_t Beep_Fre = 40;
 
 
 /**
@@ -82,6 +85,18 @@ void Timer0IntHandler(void)
 
     IntMasterDisable();
     Time_Flag++;
+    if(Beep_Flag)
+    {
+        Beep_Counter++;
+        if(Beep_Counter<Beep_Fre)
+            GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
+        if(Beep_Counter>Beep_Fre&&Beep_Counter<2*Beep_Fre)
+        {
+            GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
+        }
+        if(Beep_Counter>2*Beep_Fre)
+            Beep_Counter = 0;
+    }
     if(Time_Flag>1)
         Time_Flag = 0;
     if(Time_Flag>0)
