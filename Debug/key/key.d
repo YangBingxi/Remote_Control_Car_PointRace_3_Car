@@ -28,6 +28,9 @@ key/key.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h
 key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h
 key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/head.h
+key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h
+key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h
+key/key.obj: F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h
 
 ../key/key.c: 
 ../key/key.h: 
@@ -57,3 +60,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h:
 F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/head.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h: 

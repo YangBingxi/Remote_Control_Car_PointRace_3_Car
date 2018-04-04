@@ -14,7 +14,9 @@ ORDERED_OBJS += \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./9.6'OLED/OLED.obj" \
 "./Motor/motor.obj" \
+"./Pwm/pwm.obj" \
 "./Timer/Timer.obj" \
+"./colorful_LED/colorful_LED.obj" \
 "./delay/delay.obj" \
 "./key/key.obj" \
 "./led/led.obj" \
@@ -35,7 +37,9 @@ RMDIR := RMDIR /S/Q
 -include subdir_vars.mk
 -include 9.6'OLED/subdir_vars.mk
 -include Motor/subdir_vars.mk
+-include Pwm/subdir_vars.mk
 -include Timer/subdir_vars.mk
+-include colorful_LED/subdir_vars.mk
 -include delay/subdir_vars.mk
 -include key/subdir_vars.mk
 -include led/subdir_vars.mk
@@ -43,7 +47,9 @@ RMDIR := RMDIR /S/Q
 -include subdir_rules.mk
 -include 9.6'OLED/subdir_rules.mk
 -include Motor/subdir_rules.mk
+-include Pwm/subdir_rules.mk
 -include Timer/subdir_rules.mk
+-include colorful_LED/subdir_rules.mk
 -include delay/subdir_rules.mk
 -include key/subdir_rules.mk
 -include led/subdir_rules.mk
@@ -178,8 +184,8 @@ PointRace_3_Car.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Motor\motor.obj" "Timer\Timer.obj" "delay\delay.obj" "key\key.obj" "led\led.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Motor\motor.d" "Timer\Timer.d" "delay\delay.d" "key\key.d" "led\led.d" "uart\uart_echo.d" "uart\uartstdio.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Motor\motor.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "led\led.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Motor\motor.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "led\led.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

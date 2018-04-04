@@ -114,7 +114,9 @@ SUBDIRS := \
 . \
 9.6'OLED \
 Motor \
+Pwm \
 Timer \
+colorful_LED \
 delay \
 key \
 led \

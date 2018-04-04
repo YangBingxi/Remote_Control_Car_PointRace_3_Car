@@ -40,6 +40,9 @@ extern uint8_t MotorOrderDisplacement;     //前后表示距离，左右表示转向角
 uint32_t CountBan = 65335;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
 uint32_t SendCount = 0;
 uint8_t FlagSend = 0;
+uint8_t Time;
+uint8_t CharTable[10];
+uint32_t CharNum;
 /**
   * 函 数 名:main.c
   * 函数功能: 主函数
@@ -50,7 +53,7 @@ uint8_t FlagSend = 0;
   *   2018.03.29
   */
 int main(void)
-{
+                                                                                {
     //
     // Enable lazy stacking for interrupt handlers.  This allows floating-point
     // instructions to be used within interrupt handlers, but at the expense of
@@ -75,6 +78,12 @@ int main(void)
     MotorInit();
     MotorContolTimer();
     MotorSet(3,0,0);
+    BeepPwmInit();
+    LED_ColorInit();
+//    OLED_Init();            //初始化OLED
+//    OLED_Clear();
+//    OLEDShowScree();
+
     TimerDisable(TIMER1_BASE, TIMER_A);
     //UARTprintf("TEST");   //UARTprint函数输出重定向至UART1
 
@@ -118,20 +127,70 @@ int main(void)
             Counter = 0; //计数清零
             FlagSend = 0;
             MotorSet(3,0,0);//制动
-            TimerDisable(TIMER0_BASE, TIMER_A);
-            TimerDisable(TIMER1_BASE, TIMER_A);
+            TimerDisable(TIMER0_BASE, TIMER_A);//Disable Timer0
+            //TimerDisable(TIMER1_BASE, TIMER_A);
+            PWMGenDisable(PWM0_BASE, PWM_GEN_0);//Disable Pwm
+            LED_Color(0, 0, 0);
         }
         SendCount++;
-        if(SendCount>10000)
+        if(SendCount>9000)
         {
             SendCount = 0;
             if((MotorOrderDirection==0||MotorOrderDirection==1)&&FlagSend)
             {
-                UARTprintf("Dis%d",(Counter*20)/6400);
+//                UARTprintf("D%d",(Counter*20)/6400);
+//                UARTprintf("T%d",Counter/10);
+                //发送位移
+                CharNum = (Counter*20)/6400;
+                CharTable[0] = 'D';
+                CharTable[1] = CharNum/100+48;
+                CharTable[2] = CharNum/10%10+48;
+                CharTable[3] = CharNum%10+48;
+                CharTable[4] = '0';
+                CharTable[5] = '0';
+                UART1Send(CharTable,10);
+
+                //发送时间
+                CharNum = Counter/10;
+                CharTable[0] = 'T';
+                CharTable[1] = CharNum/10000+48;
+                CharTable[2] = CharNum/1000%10+48;
+                CharTable[3] = CharNum/100%10+48;
+                CharTable[4] = CharNum/10%10+48;
+                CharTable[5] = CharNum%10+48;
+                UART1Send(CharTable,10);
+
+//                OLED_ShowNum(28,3,(Counter*20)/6400,3,16);
+//                OLED_ShowNum(98,3,(int)(Counter/10),3,16);
             }
             else if ((MotorOrderDirection==2||MotorOrderDirection==3)&&FlagSend)
             {
-                UARTprintf("Ang%d",(int)(Counter/89.3));
+//                UARTprintf("A%d",(int)(Counter/89.3));
+//                UARTprintf("T%d",Counter/10);
+                //发送位移
+                CharNum = (int)(Counter/89.3)+48;
+                CharTable[0] = 'D';
+                CharTable[1] = CharNum/100+48;
+                CharTable[2] = CharNum/10%10+48;
+                CharTable[3] = CharNum/10+48;
+                CharTable[4] = '0';
+                CharTable[5] = '0';
+                UART1Send(CharTable,10);
+
+                //发送时间
+                CharNum = Counter/10;
+                CharTable[0] = 'T';
+                CharTable[1] = CharNum/10000+48;
+                CharTable[2] = CharNum/1000%10+48;
+                CharTable[3] = CharNum/100%10+48;
+                CharTable[4] = CharNum/10%10+48;
+                CharTable[5] = CharNum%10+48;
+                CharTable[4] = CharNum/10%10+48;
+                CharTable[5] = CharNum%10+48;
+                UART1Send(CharTable,10);
+
+//                OLED_ShowNum(28,6,(int)(Counter/89.3),3,16);
+//                OLED_ShowNum(98,3,(int)(Counter/10),3,16);
             }
         }
     }

@@ -28,6 +28,9 @@ Timer/Timer.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 Timer/Timer.obj: F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h
 Timer/Timer.obj: F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h
 Timer/Timer.obj: F:/ProjectFile/ccs/PointRace_3_Car/head.h
+Timer/Timer.obj: F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h
+Timer/Timer.obj: F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h
+Timer/Timer.obj: F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h
 
 ../Timer/Timer.c: 
 ../Timer/timer.h: 
@@ -57,3 +60,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h:
 F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/head.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h: 

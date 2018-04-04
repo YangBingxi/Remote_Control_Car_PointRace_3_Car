@@ -1,17 +1,5 @@
 #include "oled.h"
-//#include "stdlib.h"
-#include "oledfont.h"
-#include "delay.h"
-#include "inc/hw_types.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_gpio.h"
-#include "inc/hw_ints.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/timer.h"
-#include "driverlib/gpio.h"
-#include "driverlib/adc.h"
-#include "driverlib/pwm.h"
+#include "OLEDFONT.h"
 //OLED的显存
 //存放格式如下.
 //[0]0 1 2 3 ... 127
@@ -23,11 +11,29 @@
 //[6]0 1 2 3 ... 127
 //[7]0 1 2 3 ... 127
 
+void OLEDShowScree(void)
+{
+    OLED_Init();            //初始化OLED
+    OLED_Clear();
 
+    OLED_ShowCHinese(20,0,0);//帅
+    OLED_ShowCHinese(38,0,1);//气
+    OLED_ShowCHinese(58,0,2);//的
+    OLED_ShowCHinese(74,0,3);//小
+    OLED_ShowCHinese(92,0,4);//车
+
+    OLED_ShowString(0,3,"Dis:",16);
+    OLED_ShowString(0,6,"Ang:",16);
+    OLED_ShowString(62,3,"Time:",16);
+    OLED_ShowString(110,6,"Sw",16);
+}
 void GPIO_Init(void)
 {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_2|GPIO_PIN_3);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+    GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_4);
+    GPIOPinTypeGPIOOutput(GPIO_PORTC_BASE, GPIO_PIN_7);
+
 //    GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2, 0);
 //    GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_3, 0);
 }
@@ -90,28 +96,28 @@ void Write_IIC_Byte(unsigned char IIC_Byte)
 **********************************************/
 void Write_IIC_Command(unsigned char IIC_Command)
 {
-   IIC_Start();
-   Write_IIC_Byte(0x78);            //Slave address,SA0=0
+    IIC_Start();
+    Write_IIC_Byte(0x78);            //Slave address,SA0=0
     IIC_Wait_Ack();
-   Write_IIC_Byte(0x00);            //write command
+    Write_IIC_Byte(0x00);            //write command
     IIC_Wait_Ack();
-   Write_IIC_Byte(IIC_Command);
+    Write_IIC_Byte(IIC_Command);
     IIC_Wait_Ack();
-   IIC_Stop();
+    IIC_Stop();
 }
 /**********************************************
 // IIC Write Data
 **********************************************/
 void Write_IIC_Data(unsigned char IIC_Data)
 {
-   IIC_Start();
-   Write_IIC_Byte(0x78);            //D/C#=0; R/W#=0
+    IIC_Start();
+    Write_IIC_Byte(0x78);            //D/C#=0; R/W#=0
     IIC_Wait_Ack();
-   Write_IIC_Byte(0x40);            //write data
+    Write_IIC_Byte(0x40);            //write data
     IIC_Wait_Ack();
-   Write_IIC_Byte(IIC_Data);
+    Write_IIC_Byte(IIC_Data);
     IIC_Wait_Ack();
-   IIC_Stop();
+    IIC_Stop();
 }
 void OLED_WR_Byte(unsigned dat,unsigned cmd)
 {
@@ -125,8 +131,6 @@ void OLED_WR_Byte(unsigned dat,unsigned cmd)
    Write_IIC_Command(dat);
 
     }
-
-
 }
 
 /********************************************

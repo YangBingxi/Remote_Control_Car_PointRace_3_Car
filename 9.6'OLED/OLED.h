@@ -1,20 +1,6 @@
 #ifndef _OLED_H_
 #define _OLED_H_
-#include <stdint.h>
-#include <stdbool.h>
-
-#include "inc/hw_types.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_gpio.h"
-#include "inc/hw_ints.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/timer.h"
-#include "driverlib/gpio.h"
-#include "driverlib/adc.h"
-#include "driverlib/pwm.h"
-
-
+#include "head.h"
 
 #define  u8 unsigned char
 #define  u32 unsigned int
@@ -22,7 +8,7 @@
 #define OLED_DATA 1 //写数据
 #define OLED_MODE 0
 
-//引脚定义：PA2 :OLED_SCL;PA3：OLED_SDIN
+//引脚定义：PB6 :OLED_SCL;PA4：OLED_SDIN
 
 #define OLED_CS_Clr()  OLED_CS=0
 #define OLED_CS_Set()  OLED_CS=1
@@ -35,13 +21,13 @@
 
 //#define OLED_SCLK_Clr() OLED_SCL=0
 //#define OLED_SCLK_Set() OLED_SCL=1
-#define OLED_SCLK_Clr() GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2, 0);
-#define OLED_SCLK_Set() GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2, GPIO_PIN_2);
+#define OLED_SCLK_Clr() GPIOPinWrite(GPIO_PORTC_BASE,GPIO_PIN_7, 0);
+#define OLED_SCLK_Set() GPIOPinWrite(GPIO_PORTC_BASE,GPIO_PIN_7, GPIO_PIN_7);
 
 //#define OLED_SDIN_Clr() OLED_SDIN=0
 //#define OLED_SDIN_Set() OLED_SDIN=1
-#define OLED_SDIN_Clr() GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_3, 0);
-#define OLED_SDIN_Set() GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_3, GPIO_PIN_3);
+#define OLED_SDIN_Clr() GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_4, 0);
+#define OLED_SDIN_Set() GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_4, GPIO_PIN_4);
 
 
 
@@ -85,6 +71,7 @@ void Write_IIC_Command(unsigned char IIC_Command);
 void Write_IIC_Data(unsigned char IIC_Data);
 void Write_IIC_Byte(unsigned char IIC_Byte);
 void IIC_Wait_Ack();
+void OLEDShowScree(void);
 
 
 
