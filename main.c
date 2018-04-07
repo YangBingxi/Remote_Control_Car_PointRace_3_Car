@@ -33,18 +33,32 @@
 #include "uart/uart.h"
 #include "head.h"
 #include "Timer/Timer.h"
+#include "Hardware/I2C/I2C.h"
+#include "Hardware/MPU6050/mpu6050.h"
+#include "Hardware/MPU6050/mpu6050_firRefi.h"
+#include "Hardware/DMP/inv_mpu.h"
+#include "Hardware/DMP/inv_mpu_dmp_motion_driver.h"
 
 extern uint32_t Counter;
 extern uint8_t MotorOrderDirection;        //前：0  后：1  左：2  右： 3
 extern uint8_t MotorOrderDisplacement;     //前后表示距离，左右表示转向角
 uint32_t CountBan = 65335;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
-extern uint8_t Beep_Flag;
+uint32_t SendCount = 0;                    //发送计数变量
+uint8_t FlagSend = 0;                      //发送标志位
+uint8_t Time;                              //时间变量
+uint8_t CharTable[10];                     //回传数组
+uint32_t CharNum;                          //临时数据
+extern uint8_t Beep_Flag;                  //蜂鸣器标志位
+/**
+ * MPU6050相关
+ */
+uint16_t tmp;                   //温度
+short aacx,aacy,aacz;           //加速度传感器原始数据
+short gyrox,gyroy,gyroz;        //陀螺仪原始数据
+float pitch,roll,yaw;           //欧拉角
 
-uint32_t SendCount = 0;
-uint8_t FlagSend = 0;
-uint8_t Time;
-uint8_t CharTable[10];
-uint32_t CharNum;
+
+
 /**
   * 函 数 名:main.c
   * 函数功能: 主函数
@@ -55,7 +69,7 @@ uint32_t CharNum;
   *   2018.03.29
   */
 int main(void)
-                                                                                {
+{
     //
     // Enable lazy stacking for interrupt handlers.  This allows floating-point
     // instructions to be used within interrupt handlers, but at the expense of
@@ -73,21 +87,23 @@ int main(void)
     //
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2|GPIO_PIN_1);
 
-    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
+    //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
 
     Uart0Iint();
     Uart1Iint();
     MotorInit();
     MotorContolTimer();
     MotorSet(3,0,0);
-//    BeepPwmInit();
-//    LED_ColorInit();
     Beep_Configure();
-//    OLED_Init();            //初始化OLED
-//    OLED_Clear();
-//    OLEDShowScree();
-
     TimerDisable(TIMER1_BASE, TIMER_A);
+//    MPU_Init();
+//    while(mpu_dmp_init())
+//    {//进入while，检测不到MPU6050
+//        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, ~GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1));
+//        delay_ms(1000);
+//        //放置mpu错误报警
+//    }//放置正常报警
+//    UARTprintf("mpu is ok!");
     //UARTprintf("TEST");   //UARTprint函数输出重定向至UART1
 
     while(1)
@@ -121,7 +137,8 @@ int main(void)
         //计算公式；轮距16cm，1/4弧长为25.1327cm，对应20cm为400步可求得1/4弧长为251步可知每十弧度27.888889步
         else if (MotorOrderDirection==2||MotorOrderDirection==3)
         {
-            CountBan = (int)MotorOrderDisplacement*2.788889*32;
+//          CountBan = (int)MotorOrderDisplacement*2.788889*32;  //理论值89.3
+            CountBan = (int)MotorOrderDisplacement*90.2;         //修正到90.2
             //UARTprintf("Ang%d",(int)(Counter/89.3));
         }
 
@@ -130,9 +147,10 @@ int main(void)
             Counter = 0; //计数清零
             FlagSend = 0;
             MotorSet(3,0,0);//制动
-            TimerDisable(TIMER0_BASE, TIMER_A);//Disable Timer0
+            TimerDisable(TIMER0_BASE, TIMER_A);
             //TimerDisable(TIMER1_BASE, TIMER_A);
             Beep_Flag=0;
+
         }
         SendCount++;
         if(SendCount>9000)
@@ -143,7 +161,7 @@ int main(void)
 //                UARTprintf("D%d",(Counter*20)/6400);
 //                UARTprintf("T%d",Counter/10);
                 //发送位移
-                CharNum = (Counter*20)/6400;
+                CharNum = (Counter*20)/6400+1;   //做修改
                 CharTable[0] = 'D';
                 CharTable[1] = CharNum/100+48;
                 CharTable[2] = CharNum/10%10+48;
@@ -170,8 +188,8 @@ int main(void)
 //                UARTprintf("A%d",(int)(Counter/89.3));
 //                UARTprintf("T%d",Counter/10);
                 //发送位移
-                CharNum = (int)(Counter/89.3)+48;
-                CharTable[0] = 'D';
+                CharNum = (int)(Counter/90.2+2); //做修正
+                CharTable[0] = 'A';
                 CharTable[1] = CharNum/100+48;
                 CharTable[2] = CharNum/10%10+48;
                 CharTable[3] = CharNum/10+48;
@@ -187,14 +205,22 @@ int main(void)
                 CharTable[3] = CharNum/100%10+48;
                 CharTable[4] = CharNum/10%10+48;
                 CharTable[5] = CharNum%10+48;
-                CharTable[4] = CharNum/10%10+48;
-                CharTable[5] = CharNum%10+48;
                 UART1Send(CharTable,10);
 
 //                OLED_ShowNum(28,6,(int)(Counter/89.3),3,16);
 //                OLED_ShowNum(98,3,(int)(Counter/10),3,16);
             }
+            if(mpu_dmp_get_data(&pitch,&roll,&yaw)==0){
+
+                //temp=MPU_Get_Temperature();   //得到温度值
+                MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
+                MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
+                if(1){UARTprintf("Pitch  %d  ", (int)pitch);}
+                if(1){UARTprintf("Roll  %d  ", (int)roll);}
+                if(1){UARTprintf("Yaw  %d\n", (int)yaw);}
+            }//end if
         }
+
     }
 
   //  return 0;

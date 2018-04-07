@@ -112,8 +112,11 @@ PDE_DEPS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
-9.6'OLED \
 Beep \
+Hardware/DMP \
+Hardware/I2C \
+Hardware/MPU6050 \
+Hardware/Sys \
 Motor \
 Pwm \
 Timer \

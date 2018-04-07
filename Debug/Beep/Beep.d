@@ -28,9 +28,9 @@ Beep/Beep.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 Beep/Beep.obj: F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h
 Beep/Beep.obj: F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h
 Beep/Beep.obj: F:/ProjectFile/ccs/PointRace_3_Car/head.h
-Beep/Beep.obj: F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h
 Beep/Beep.obj: F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h
 Beep/Beep.obj: F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h
+Beep/Beep.obj: F:/ProjectFile/ccs/PointRace_3_Car/Beep/Beep.h
 
 ../Beep/Beep.c: 
 ../Beep/beep.h: 
@@ -60,6 +60,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h:
 F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/head.h: 
-F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/Beep/Beep.h: 

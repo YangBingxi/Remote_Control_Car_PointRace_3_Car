@@ -49,9 +49,9 @@ void MotorInit(void)
     //使能控制引脚：D0、D1   低电平使能
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
     //输出GPIO配置
-    GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE,GPIO_PIN_0|GPIO_PIN_1);
-    GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0, GPIO_PIN_0); //默认不使能
-    GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE,GPIO_PIN_1|GPIO_PIN_2);
+    GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, GPIO_PIN_1); //默认不使能
+    GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, GPIO_PIN_2);
 
 }
 
@@ -77,23 +77,23 @@ void MotorSet(uint8_t Motor,uint8_t Motor0Direction,uint8_t Motor1Direction)
 {
     if(Motor==0)
     {
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0, 0);       //低电平使能
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, 0);       //低电平使能
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, GPIO_PIN_2);
     }
     else if(Motor==1)
     {
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0, GPIO_PIN_0);
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, 0);       //低电平使能
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, 0);       //低电平使能
     }
     else if(Motor==2)
     {
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0, 0);       //低电平使能
         GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, 0);       //低电平使能
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, 0);       //低电平使能
     }
     else if(Motor==3)
     {
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0, GPIO_PIN_0);
         GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, GPIO_PIN_2);
     }
 
     if(Motor0Direction==0)

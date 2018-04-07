@@ -1,8 +1,14 @@
 eclipse.preferences.version=1
-encoding//Debug/9.6'OLED/subdir_rules.mk=UTF-8
-encoding//Debug/9.6'OLED/subdir_vars.mk=UTF-8
 encoding//Debug/Beep/subdir_rules.mk=UTF-8
 encoding//Debug/Beep/subdir_vars.mk=UTF-8
+encoding//Debug/Hardware/DMP/subdir_rules.mk=UTF-8
+encoding//Debug/Hardware/DMP/subdir_vars.mk=UTF-8
+encoding//Debug/Hardware/I2C/subdir_rules.mk=UTF-8
+encoding//Debug/Hardware/I2C/subdir_vars.mk=UTF-8
+encoding//Debug/Hardware/MPU6050/subdir_rules.mk=UTF-8
+encoding//Debug/Hardware/MPU6050/subdir_vars.mk=UTF-8
+encoding//Debug/Hardware/Sys/subdir_rules.mk=UTF-8
+encoding//Debug/Hardware/Sys/subdir_vars.mk=UTF-8
 encoding//Debug/Motor/subdir_rules.mk=UTF-8
 encoding//Debug/Motor/subdir_vars.mk=UTF-8
 encoding//Debug/Pwm/subdir_rules.mk=UTF-8

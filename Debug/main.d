@@ -29,10 +29,15 @@ main.obj: D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h
 main.obj: F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h
 main.obj: F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h
 main.obj: F:/ProjectFile/ccs/PointRace_3_Car/head.h
-main.obj: F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h
 main.obj: F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h
 main.obj: F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h
+main.obj: F:/ProjectFile/ccs/PointRace_3_Car/Beep/Beep.h
 main.obj: ../Timer/Timer.h
+main.obj: ../Hardware/I2C/I2C.h
+main.obj: ../Hardware/MPU6050/mpu6050.h
+main.obj: ../Hardware/MPU6050/mpu6050_firRefi.h
+main.obj: ../Hardware/DMP/inv_mpu.h
+main.obj: ../Hardware/DMP/inv_mpu_dmp_motion_driver.h
 
 ../main.c: 
 D:/Project_Program/Ccs_V7/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h: 
@@ -63,7 +68,12 @@ D:/ti/TivaWare_C_Series-2.1.4.178/driverlib/interrupt.h:
 F:/ProjectFile/ccs/PointRace_3_Car/uart/uart.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/head.h: 
-F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/Beep/Beep.h: 
 ../Timer/Timer.h: 
+../Hardware/I2C/I2C.h: 
+../Hardware/MPU6050/mpu6050.h: 
+../Hardware/MPU6050/mpu6050_firRefi.h: 
+../Hardware/DMP/inv_mpu.h: 
+../Hardware/DMP/inv_mpu_dmp_motion_driver.h: 

@@ -31,9 +31,9 @@ uart/uart_echo.obj: D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h
 uart/uart_echo.obj: D:/Project_Program/Ccs_V7/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/PointRace_3_Car/head.h
-uart/uart_echo.obj: F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h
 uart/uart_echo.obj: F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h
+uart/uart_echo.obj: F:/ProjectFile/ccs/PointRace_3_Car/Beep/Beep.h
 
 ../uart/uart_echo.c: 
 D:/Project_Program/Ccs_V7/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h: 
@@ -66,6 +66,6 @@ D:/ti/TivaWare_C_Series-2.1.4.178/utils/uartstdio.h:
 D:/Project_Program/Ccs_V7/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/delay/delay.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/head.h: 
-F:/ProjectFile/ccs/PointRace_3_Car/9.6'OLED/OLED.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/colorful_LED/colorful_LED.h: 
 F:/ProjectFile/ccs/PointRace_3_Car/Pwm/pwm.h: 
+F:/ProjectFile/ccs/PointRace_3_Car/Beep/Beep.h: 

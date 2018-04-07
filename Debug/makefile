@@ -12,8 +12,13 @@ GEN_CMDS__FLAG :=
 ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
-"./9.6'OLED/OLED.obj" \
 "./Beep/Beep.obj" \
+"./Hardware/DMP/inv_mpu.obj" \
+"./Hardware/DMP/inv_mpu_dmp_motion_driver.obj" \
+"./Hardware/I2C/I2C.obj" \
+"./Hardware/MPU6050/mpu6050.obj" \
+"./Hardware/MPU6050/mpu6050_firRefi.obj" \
+"./Hardware/Sys/sys.obj" \
 "./Motor/motor.obj" \
 "./Pwm/pwm.obj" \
 "./Timer/Timer.obj" \
@@ -36,8 +41,11 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
--include 9.6'OLED/subdir_vars.mk
 -include Beep/subdir_vars.mk
+-include Hardware/DMP/subdir_vars.mk
+-include Hardware/I2C/subdir_vars.mk
+-include Hardware/MPU6050/subdir_vars.mk
+-include Hardware/Sys/subdir_vars.mk
 -include Motor/subdir_vars.mk
 -include Pwm/subdir_vars.mk
 -include Timer/subdir_vars.mk
@@ -47,8 +55,11 @@ RMDIR := RMDIR /S/Q
 -include led/subdir_vars.mk
 -include uart/subdir_vars.mk
 -include subdir_rules.mk
--include 9.6'OLED/subdir_rules.mk
 -include Beep/subdir_rules.mk
+-include Hardware/DMP/subdir_rules.mk
+-include Hardware/I2C/subdir_rules.mk
+-include Hardware/MPU6050/subdir_rules.mk
+-include Hardware/Sys/subdir_rules.mk
 -include Motor/subdir_rules.mk
 -include Pwm/subdir_rules.mk
 -include Timer/subdir_rules.mk
@@ -187,8 +198,8 @@ PointRace_3_Car.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "9.6'OLED\OLED.obj" "Beep\Beep.obj" "Motor\motor.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "led\led.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "9.6'OLED\OLED.d" "Beep\Beep.d" "Motor\motor.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "led\led.d" "uart\uart_echo.d" "uart\uartstdio.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "Beep\Beep.obj" "Hardware\DMP\inv_mpu.obj" "Hardware\DMP\inv_mpu_dmp_motion_driver.obj" "Hardware\I2C\I2C.obj" "Hardware\MPU6050\mpu6050.obj" "Hardware\MPU6050\mpu6050_firRefi.obj" "Hardware\Sys\sys.obj" "Motor\motor.obj" "Pwm\pwm.obj" "Timer\Timer.obj" "colorful_LED\colorful_LED.obj" "delay\delay.obj" "key\key.obj" "led\led.obj" "uart\uart_echo.obj" "uart\uartstdio.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "Beep\Beep.d" "Hardware\DMP\inv_mpu.d" "Hardware\DMP\inv_mpu_dmp_motion_driver.d" "Hardware\I2C\I2C.d" "Hardware\MPU6050\mpu6050.d" "Hardware\MPU6050\mpu6050_firRefi.d" "Hardware\Sys\sys.d" "Motor\motor.d" "Pwm\pwm.d" "Timer\Timer.d" "colorful_LED\colorful_LED.d" "delay\delay.d" "key\key.d" "led\led.d" "uart\uart_echo.d" "uart\uartstdio.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
