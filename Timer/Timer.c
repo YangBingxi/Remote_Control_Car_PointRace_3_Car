@@ -23,7 +23,7 @@ uint32_t Counter = 0;
 uint8_t Beep_Flag = 0;
 uint32_t Beep_Counter = 0;
 uint32_t Beep_Fre = 40;
-
+extern uint8_t Flag_Stop;
 
 /**
   * 函 数 名:MotorContolTimer.c
@@ -84,38 +84,41 @@ void Timer0IntHandler(void)
     TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
 
     IntMasterDisable();
-    Time_Flag++;
-    if(Beep_Flag)
+    if(Flag_Stop==0)
     {
-        Beep_Counter++;
-        if(Beep_Counter<Beep_Fre)
-            GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
-        if(Beep_Counter>Beep_Fre&&Beep_Counter<2*Beep_Fre)
-        {
-            GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
-        }
-        if(Beep_Counter>2*Beep_Fre)
-            Beep_Counter = 0;
-    }
-    if(Time_Flag>1)
-        Time_Flag = 0;
-    if(Time_Flag>0)
-    {
-        Counter++;
-        if(Counter>65535)
-            Counter=0;
-        GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 0);//执行脉冲来控制转速
-        GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 0);//执行脉冲来控制转速
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
+        if(Beep_Flag)
+          {
+              Beep_Counter++;
+              if(Beep_Counter<Beep_Fre)
+                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_PIN_6);
+              if(Beep_Counter>Beep_Fre&&Beep_Counter<2*Beep_Fre)
+              {
+                  GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6, 0);
+              }
+              if(Beep_Counter>2*Beep_Fre)
+                  Beep_Counter = 0;
+          }
+          Time_Flag++;
+          if(Time_Flag>1)
+              Time_Flag = 0;
+          if(Time_Flag>0)
+          {
+              Counter++;
+              if(Counter>65535)
+                  Counter=0;
+              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 0);//执行脉冲来控制转速
+              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 0);//执行脉冲来控制转速
+             // GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
 
-    }
-    else
-    {
-        GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, GPIO_PIN_5);//执行脉冲来控制转速
-        GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, GPIO_PIN_6);//执行脉冲来控制转速
+          }
+          else
+          {
+              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, GPIO_PIN_5);//执行脉冲来控制转速
+              GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, GPIO_PIN_6);//执行脉冲来控制转速
 
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
+              //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
 
+          }
     }
     IntMasterEnable();
 

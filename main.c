@@ -49,6 +49,10 @@ uint8_t Time;                              //时间变量
 uint8_t CharTable[10];                     //回传数组
 uint32_t CharNum;                          //临时数据
 extern uint8_t Beep_Flag;                  //蜂鸣器标志位
+uint8_t Flag_Stop = 0;
+extern uint32_t CountBan_tem;
+extern uint8_t Swap;
+
 /**
  * MPU6050相关
  */
@@ -57,7 +61,7 @@ short aacx,aacy,aacz;           //加速度传感器原始数据
 short gyrox,gyroy,gyroz;        //陀螺仪原始数据
 float pitch,roll,yaw;           //欧拉角
 
-
+float parameter_Ang = 95.0;
 
 /**
   * 函 数 名:main.c
@@ -138,10 +142,12 @@ int main(void)
         else if (MotorOrderDirection==2||MotorOrderDirection==3)
         {
 //          CountBan = (int)MotorOrderDisplacement*2.788889*32;  //理论值89.3
-            CountBan = (int)MotorOrderDisplacement*90.2;         //修正到90.2
+            CountBan = (int)MotorOrderDisplacement*parameter_Ang;         //修正到90.2
             //UARTprintf("Ang%d",(int)(Counter/89.3));
         }
 
+        if(Swap)
+            CountBan = CountBan_tem;
         if(Counter>CountBan)
         {
             Counter = 0; //计数清零
@@ -152,8 +158,15 @@ int main(void)
             Beep_Flag=0;
 
         }
+        if(Flag_Stop)
+        {
+            GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, ~GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1));
+            delay_ms(200);
+//            UARTprintf("Counter%d",Counter);
+//            UARTprintf("CountBan%d",CountBan);
+        }
         SendCount++;
-        if(SendCount>9000)
+        if(SendCount>1000)
         {
             SendCount = 0;
             if((MotorOrderDirection==0||MotorOrderDirection==1)&&FlagSend)
@@ -188,11 +201,11 @@ int main(void)
 //                UARTprintf("A%d",(int)(Counter/89.3));
 //                UARTprintf("T%d",Counter/10);
                 //发送位移
-                CharNum = (int)(Counter/90.2+2); //做修正
+                CharNum = (Counter/(int)parameter_Ang); //做修正
                 CharTable[0] = 'A';
                 CharTable[1] = CharNum/100+48;
                 CharTable[2] = CharNum/10%10+48;
-                CharTable[3] = CharNum/10+48;
+                CharTable[3] = CharNum%10+48;
                 CharTable[4] = '0';
                 CharTable[5] = '0';
                 UART1Send(CharTable,10);

@@ -54,6 +54,7 @@
 #include "driverlib/uart.h"
 #include "uart.h"
 #include "Timer/Timer.h"
+#include "head.h"
 
 
 //*****************************************************************************
@@ -205,12 +206,15 @@ uint8_t ReciveData_UART1[16];
 uint8_t ReciveData_i_UART1 = 0;
 uint8_t MotorOrderDirection = 5;        //前：0  后：1  左：2  右： 3
 uint8_t MotorOrderDisplacement = 0;     //前后表示距离，左右表示转向角
-extern uint32_t Counter;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
+extern uint32_t Counter,CountBan;                 //Counter最大值65535，计数一圈6400故，有效计数为10圈，即200cm
 extern uint8_t FlagSend;
 extern uint8_t Beep_Flag;
 extern uint32_t Beep_Counter;
 extern uint32_t Beep_Fre;
-
+extern float parameter_Ang;
+extern uint8_t Flag_Stop;
+uint32_t CountBan_tem = 0;
+uint8_t Swap = 0;
 //*****************************************************************************
 //
 // The UART interrupt handler.
@@ -311,6 +315,36 @@ UART1IntHandler(void)
         Beep_Counter = 0;
         Beep_Fre = 40;
 
+    }
+    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='O'&&ReciveData_UART1[3]=='P')
+    {
+        Flag_Stop = 1;
+        FlagSend = 0;
+        CountBan_tem = CountBan;
+//        UARTprintf("Counter%d",Counter);
+//        UARTprintf("CountBan%d",CountBan);
+
+    }
+    else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='A'&&ReciveData_UART1[3]=='R')
+    {
+
+        Flag_Stop = 0;
+        FlagSend = 1;
+        CountBan = CountBan_tem;
+        Swap = 1;
+//        UARTprintf("Counter%d",Counter);
+//        UARTprintf("CountBan%d",CountBan);
+    }
+
+    else if (ReciveData_UART1[0]=='A')
+    {
+        parameter_Ang=parameter_Ang + 0.05;
+        UARTprintf("%d",(int)(parameter_Ang*10));
+    }
+    else if (ReciveData_UART1[0]=='P')
+    {
+        parameter_Ang=parameter_Ang - 0.05;
+        UARTprintf("%d",(int)(parameter_Ang*10));
     }
 
     MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
