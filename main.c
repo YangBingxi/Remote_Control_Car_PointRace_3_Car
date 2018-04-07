@@ -50,8 +50,7 @@ uint8_t CharTable[10];                     //回传数组
 uint32_t CharNum;                          //临时数据
 extern uint8_t Beep_Flag;                  //蜂鸣器标志位
 uint8_t Flag_Stop = 0;
-extern uint32_t CountBan_tem;
-extern uint8_t Swap;
+
 
 /**
  * MPU6050相关
@@ -146,8 +145,6 @@ int main(void)
             //UARTprintf("Ang%d",(int)(Counter/89.3));
         }
 
-        if(Swap)
-            CountBan = CountBan_tem;
         if(Counter>CountBan)
         {
             Counter = 0; //计数清零

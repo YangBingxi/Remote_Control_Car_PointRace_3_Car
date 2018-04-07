@@ -213,8 +213,6 @@ extern uint32_t Beep_Counter;
 extern uint32_t Beep_Fre;
 extern float parameter_Ang;
 extern uint8_t Flag_Stop;
-uint32_t CountBan_tem = 0;
-uint8_t Swap = 0;
 //*****************************************************************************
 //
 // The UART interrupt handler.
@@ -320,20 +318,11 @@ UART1IntHandler(void)
     {
         Flag_Stop = 1;
         FlagSend = 0;
-        CountBan_tem = CountBan;
-//        UARTprintf("Counter%d",Counter);
-//        UARTprintf("CountBan%d",CountBan);
-
     }
     else if (ReciveData_UART1[0]=='S'&&ReciveData_UART1[1]=='T'&&ReciveData_UART1[2]=='A'&&ReciveData_UART1[3]=='R')
     {
-
         Flag_Stop = 0;
         FlagSend = 1;
-        CountBan = CountBan_tem;
-        Swap = 1;
-//        UARTprintf("Counter%d",Counter);
-//        UARTprintf("CountBan%d",CountBan);
     }
 
     else if (ReciveData_UART1[0]=='A')
@@ -346,8 +335,8 @@ UART1IntHandler(void)
         parameter_Ang=parameter_Ang - 0.05;
         UARTprintf("%d",(int)(parameter_Ang*10));
     }
-
-    MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
+    if(ReciveData_UART1[0]=='F'||ReciveData_UART1[0]=='B'||ReciveData_UART1[0]=='R'||ReciveData_UART1[0]=='L')
+        MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
 }
 
 
