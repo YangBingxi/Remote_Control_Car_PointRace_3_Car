@@ -60,7 +60,8 @@ short aacx,aacy,aacz;           //加速度传感器原始数据
 short gyrox,gyroy,gyroz;        //陀螺仪原始数据
 float pitch,roll,yaw;           //欧拉角
 
-float parameter_Ang = 95.0;
+float parameter_Ang = 95.0;     //角度参数修正
+float parameter_Dis = 340.0;    //距离参数修正
 
 /**
   * 函 数 名:main.c
@@ -88,7 +89,7 @@ int main(void)
     //
     // Enable the GPIO pins for the LED (PF2).
     //
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2|GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
 
     //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
 
@@ -134,7 +135,7 @@ int main(void)
         //计算公式：200步一转，一转20cm,32细分；Distance = 20*Counter/(200*32)；
         if(MotorOrderDirection==0||MotorOrderDirection==1)
         {
-            CountBan = MotorOrderDisplacement*10*32;
+            CountBan = MotorOrderDisplacement*parameter_Dis;
             //UARTprintf("Dis%d",(Counter*20)/6400);
         }
         //计算公式；轮距16cm，1/4弧长为25.1327cm，对应20cm为400步可求得1/4弧长为251步可知每十弧度27.888889步

@@ -212,6 +212,7 @@ extern uint8_t Beep_Flag;
 extern uint32_t Beep_Counter;
 extern uint32_t Beep_Fre;
 extern float parameter_Ang;
+extern float parameter_Dis;
 extern uint8_t Flag_Stop;
 //*****************************************************************************
 //
@@ -324,16 +325,26 @@ UART1IntHandler(void)
         Flag_Stop = 0;
         FlagSend = 1;
     }
-
-    else if (ReciveData_UART1[0]=='A')
+//参数校准
+    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='1')
     {
         parameter_Ang=parameter_Ang + 0.05;
-        UARTprintf("%d",(int)(parameter_Ang*10));
+        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
     }
-    else if (ReciveData_UART1[0]=='P')
+    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='1')
     {
         parameter_Ang=parameter_Ang - 0.05;
-        UARTprintf("%d",(int)(parameter_Ang*10));
+        UARTprintf("parameter_Ang=%d",(int)(parameter_Ang*10));
+    }
+    else if (ReciveData_UART1[0]=='A'&&ReciveData_UART1[1]=='2')
+    {
+        parameter_Dis=parameter_Dis + 0.5;
+        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
+    }
+    else if (ReciveData_UART1[0]=='P'&&ReciveData_UART1[1]=='2')
+    {
+        parameter_Dis=parameter_Dis - 0.5;
+        UARTprintf("parameter_Dis%d",(int)(parameter_Dis));
     }
     if(ReciveData_UART1[0]=='F'||ReciveData_UART1[0]=='B'||ReciveData_UART1[0]=='R'||ReciveData_UART1[0]=='L')
         MotorOrderDisplacement = (ReciveData_UART1[1]-48)*100+(ReciveData_UART1[2]-48)*10+(ReciveData_UART1[3]-48);
