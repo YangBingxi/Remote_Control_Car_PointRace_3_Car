@@ -2,6 +2,7 @@
 ## 实现效果
 &emsp;&emsp;小车接收遥控器或电脑端的指令，完成指令动作
 指令|功能
+---|---
 Fxxx|前进xxxcm
 Bxxx|后退xxxcm
 Rxxx|右转xxx°
