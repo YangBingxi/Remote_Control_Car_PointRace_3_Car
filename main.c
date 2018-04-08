@@ -11,7 +11,7 @@
   *   MCUc:TM4C123、2相四线步进电机、DRV8825电机驱动、WiFi
   * 软件设计说明：
   *   通过无线精确控制小车的前进、后退距离；左转右转角度。
-  * Github：
+  * Github：https://github.com/youngsw/Remote_Control_Car_PointRace_3_Car
   ******************************************************************************
 **/
 #include <stdint.h>
@@ -49,7 +49,7 @@ uint8_t Time;                              //时间变量
 uint8_t CharTable[10];                     //回传数组
 uint32_t CharNum;                          //临时数据
 extern uint8_t Beep_Flag;                  //蜂鸣器标志位
-uint8_t Flag_Stop = 0;
+uint8_t Flag_Stop = 0;                     //暂停标志
 
 
 /**
@@ -93,13 +93,16 @@ int main(void)
 
     //GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
 
-    Uart0Iint();
-    Uart1Iint();
-    MotorInit();
-    MotorContolTimer();
-    MotorSet(3,0,0);
-    Beep_Configure();
-    TimerDisable(TIMER1_BASE, TIMER_A);
+    Uart0Iint();        //串口1初始化
+    Uart1Iint();        //串口2初始化
+    MotorInit();        //电机控制引脚初始化
+    MotorContolTimer(); //电机控制定时器初始化
+    MotorSet(3,0,0);    //设置电机初始为制动
+    Beep_Configure();   //蜂鸣器初始化
+    TimerDisable(TIMER1_BASE, TIMER_A);//关闭使能定时器
+    /**
+     * MPU6050初始化
+     */
 //    MPU_Init();
 //    while(mpu_dmp_init())
 //    {//进入while，检测不到MPU6050
@@ -110,7 +113,7 @@ int main(void)
 //    UARTprintf("mpu is ok!");
     //UARTprintf("TEST");   //UARTprint函数输出重定向至UART1
 
-    while(1)
+    while(1)    //Loop
     {
         if(MotorOrderDirection==0)  //F
         {
@@ -146,7 +149,7 @@ int main(void)
             //UARTprintf("Ang%d",(int)(Counter/89.3));
         }
 
-        if(Counter>CountBan)
+        if(Counter>CountBan)    //停止
         {
             Counter = 0; //计数清零
             FlagSend = 0;
@@ -156,7 +159,7 @@ int main(void)
             Beep_Flag=0;
 
         }
-        if(Flag_Stop)
+        if(Flag_Stop)           //暂停
         {
             GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, ~GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_1));
             delay_ms(200);
@@ -164,7 +167,7 @@ int main(void)
 //            UARTprintf("CountBan%d",CountBan);
         }
         SendCount++;
-        if(SendCount>1000)
+        if(SendCount>1000)  //控制发送密度
         {
             SendCount = 0;
             if((MotorOrderDirection==0||MotorOrderDirection==1)&&FlagSend)
@@ -221,8 +224,8 @@ int main(void)
 //                OLED_ShowNum(28,6,(int)(Counter/89.3),3,16);
 //                OLED_ShowNum(98,3,(int)(Counter/10),3,16);
             }
-            if(mpu_dmp_get_data(&pitch,&roll,&yaw)==0){
-
+            if(mpu_dmp_get_data(&pitch,&roll,&yaw)==0)
+            {
                 //temp=MPU_Get_Temperature();   //得到温度值
                 MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
                 MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
