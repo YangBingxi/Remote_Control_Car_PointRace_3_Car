@@ -22,8 +22,8 @@
   * 返 回 值: 无
   * 说    明:
   * 接口说明：
-  *     D0：Motor0 使能
-  *     D1：Motor1 使能
+  *     D1：Motor0 使能
+  *     D2：Motor1 使能
   *     C4：Motor0 方向
   *     C5：Motor0 速度
   *     C6：Motor1 速度
