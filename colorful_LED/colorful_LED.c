@@ -1,7 +1,8 @@
+
 /*
  * colorful_LED.c
  *
- *  Created on: 2017Äê10ÔÂ6ÈÕ
+ *  Created on: 2017å¹´10æœˆ6æ—¥
  *      Author: 79864
  */
 #include <stdint.h>
@@ -25,30 +26,30 @@
 
 void LED_ColorInit(void)
 {
-    // PWMÊ±ÖÓÅäÖÃ£º4·ÖÆµ
+    // PWMæ—¶é’Ÿé…ç½®ï¼š4åˆ†é¢‘
     SysCtlPWMClockSet(SYSCTL_PWMDIV_4);
-    //Ê¹ÄÜPWM1Ä£¿é
+    //ä½¿èƒ½PWM1æ¨¡å—
     SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
-    //Ê¹ÄÜPWMÊä³öËùÔÚGPIO
+    //ä½¿èƒ½PWMè¾“å‡ºæ‰€åœ¨GPIO
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-    GPIOPinConfigure(GPIO_PF1_M1PWM5);  //¸Ãº¯Êý²»ÄÜÁ¬ÐøÎ»²Ù×÷
+    GPIOPinConfigure(GPIO_PF1_M1PWM5);  //è¯¥å‡½æ•°ä¸èƒ½è¿žç»­ä½æ“ä½œ
     GPIOPinConfigure(GPIO_PF2_M1PWM6);
     GPIOPinConfigure(GPIO_PF3_M1PWM7);
-    //ÅäÖÃGPIOÎªPWM¹¦ÄÜ
+    //é…ç½®GPIOä¸ºPWMåŠŸèƒ½
     GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
-    //ÅäÖÃPWM·¢ÉúÆ÷1£º¼Ó¼õ¼ÆÊý
+    //é…ç½®PWMå‘ç”Ÿå™¨1ï¼šåŠ å‡è®¡æ•°
     PWMGenConfigure(PWM1_BASE,PWM_GEN_2,PWM_GEN_MODE_UP_DOWN| PWM_GEN_MODE_NO_SYNC);
     PWMGenConfigure(PWM1_BASE,PWM_GEN_3,PWM_GEN_MODE_UP_DOWN| PWM_GEN_MODE_NO_SYNC);
-     //ÉèÖÃPWM·¢ÉúÆ÷1µÄÖÜÆÚ
+     //è®¾ç½®PWMå‘ç”Ÿå™¨1çš„å‘¨æœŸ
     PWMGenPeriodSet(PWM1_BASE, PWM_GEN_2, 25500);        //f~1k
     PWMGenPeriodSet(PWM1_BASE, PWM_GEN_3, 25500);        //f~1k
-    //ÉèÖÃGPIOÊä³öµÄÂö³å¿í¶È
+    //è®¾ç½®GPIOè¾“å‡ºçš„è„‰å†²å®½åº¦
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_5, 00000);
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_6, 00000);
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7, 00000);
-    //Ê¹ÄÜÊä³ö
+    //ä½¿èƒ½è¾“å‡º
     PWMOutputState(PWM1_BASE, (PWM_OUT_5_BIT|PWM_OUT_6_BIT|PWM_OUT_7_BIT), true);
-    //Ê¹ÄÜPWM·¢ÉúÆ÷2¡¢3
+    //ä½¿èƒ½PWMå‘ç”Ÿå™¨2ã€3
     PWMGenEnable(PWM1_BASE,PWM_GEN_2);
     PWMGenEnable(PWM1_BASE,PWM_GEN_3);
 
