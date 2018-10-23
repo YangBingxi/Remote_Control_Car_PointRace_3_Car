@@ -13,6 +13,15 @@ STOP|暂停任务
 START|启动任务
 Ax|参数修改
 Px|参数修改
+## 硬件连接
+外设|MCU_IO
+---|---
+Motor0 使能|PD1
+Motor1 使能|PD2
+Motor0 方向|PC4
+Motor1 方向|PC7
+Motor0 速度|PC5
+Motor1 速度|PC6
 ## 硬件结构
 MCU：TM4C123G
 电机：42步 步进电机
